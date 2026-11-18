@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lumière — салон красоты</title>
+  <style>
+    /* ===== ПЕРЕМЕННЫЕ: меняй цвета и шрифты тут ===== */
+    :root {
+      --bg: #fdf9f6;
+      --bg-alt: #f6ece7;
+      --text: #4a3c37;
+      --accent: #c98a7d;      /* основной акцент */
+      --accent-dark: #a96a5e;
+      --white: #ffffff;
+      --radius: 14px;
+      --shadow: 0 8px 24px rgba(74, 60, 55, 0.08);
+      --max: 1140px;
+    }
+
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      scroll-behavior: smooth;
+      font-family: "Segoe UI", Arial, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.6;
+    }
+
+    .container { max-width: var(--max); margin: 0 auto; padding: 0 20px; }
+
+    section { padding: 80px 0; }
+    section:nth-of-type(even) { background: var(--bg-alt); }
+
+    h2 {
+      font-size: 32px;
+      text-align: center;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+    .subtitle { text-align: center; color: #8a7a73; margin-bottom: 48px; }
+
+    /* ===== КНОПКИ ===== */
+    .btn {
+      display: inline-block;
+      padding: 14px 34px;
+      background: var(--accent);
+      color: var(--white);
+      text-decoration: none;
+      border: none;
+      border-radius: 50px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.25s;
+    }
+    .btn:hover { background: var(--accent-dark); transform: translateY(-2px); }
+
+    /* ===== ШАПКА ===== */
+    header {
+      position: sticky; top: 0; z-index: 10;
+      background: rgba(253, 249, 246, 0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid #eee0d9;
+    }
+    .nav { display: flex; align-items: center; justify-content: space-between; height: 70px; }
+    .logo { font-size: 24px; font-weight: 700; color: var(--accent-dark); text-decoration: none; }
+    .nav ul { display: flex; gap: 28px; list-style: none; }
+    .nav a { color: var(--text); text-decoration: none; font-size: 15px; }
+    .nav a:hover { color: var(--accent); }
+
+    /* ===== HERO ===== */
+    .hero {
+      min-height: 78vh;
+      display: flex; align-items: center; justify-content: center;
+      text-align: center;
+      background: linear-gradient(160deg, var(--bg) 40%, var(--bg-alt));
+    }
+    .hero h1 { font-size: 52px; margin-bottom: 16px; font-weight: 600; }
+    .hero p { font-size: 20px; color: #8a7a73; margin-bottom: 36px; max-width: 560px; }
+
+    /* ===== УСЛУГИ ===== */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 24px;
+    }
+    .card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 34px 26px;
+      text-align: center;
+      box-shadow: var(--shadow);
+      transition: 0.25s;
+    }
+    .card:hover { transform: translateY(-6px); }
+    .card .icon { font-size: 42px; margin-bottom: 14px; }
+    .card h3 { margin-bottom: 10px; font-size: 19px; }
+
+    /* ===== ПРАЙС ===== */
+    .price-table { max-width: 720px; margin: 0 auto; }
+    .price-row {
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding: 16px 6px;
+      border-bottom: 1px dashed #d9c8c0;
+    }
+    .price-row .name { font-size: 17px; }
+    .price-row .val { font-weight: 600; color: var(--accent-dark); white-space: nowrap; }
+
+    /* ===== МАСТЕРА ===== */
+    .masters-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 24px;
+    }
+    .master { text-align: center; }
+    .master .avatar {
+      width: 130px; height: 130px;
+      margin: 0 auto 14px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), #e5b8ad);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 40px; color: var(--white);
+      box-shadow: var(--shadow);
+    }
+    .master p { color: #8a7a73; font-size: 14px; }
+
+    /* ===== КОНТАКТЫ ===== */
+    .contact-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+    .contact-info p { margin-bottom: 14px; font-size: 17px; }
+    form { display: flex; flex-direction: column; gap: 14px; }
+    input, select, textarea {
+      padding: 13px 16px;
+      border: 1px solid #e0cfc7;
+      border-radius: 10px;
+      font-size: 15px;
+      font-family: inherit;
+      background: var(--white);
+    }
+    input:focus, select:focus, textarea:focus {
+      outline: none; border-color: var(--accent);
+    }
+
+    /* ===== ФУТЕР ===== */
+    footer {
+      background: var(--text);
+      color: #cbbcb5;
+      text-align: center;
+      padding: 28px 0;
+      font-size: 14px;
+    }
+
+    /* ===== АДАПТИВ ===== */
+    @media (max-width: 720px) {
+      .nav ul { display: none; }
+      .hero h1 { font-size: 34px; }
+      .contact-wrap { grid-template-columns: 1fr; }
+      section { padding: 56px 0; }
+    }
+  </style>
+<base target="_blank">
+</head>
+<body>
+
+  <!-- ШАПКА -->
+  <header>
+    <div class="container nav">
+      <a href="#" class="logo">Lumiere</a>
+      <ul>
+        <li><a href="#services">Услуги</a></li>
+        <li><a href="#prices">Цены</a></li>
+        <li><a href="#masters">Мастера</a></li>
+        <li><a href="#contacts">Контакты</a></li>
+      </ul>
+      <a href="#contacts" class="btn" style="padding:10px 22px;font-size:14px;">Записаться</a>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <h1>Красота в деталях</h1>
+      <p>Маникюр, педикюр, уход за волосами и бровями — всё в одном уютном салоне в центре города.</p>
+      <a href="#contacts" class="btn">Записаться онлайн</a>
+    </div>
+  </section>
+
+  <!-- УСЛУГИ -->
+  <section id="services">
+    <div class="container">
+      <h2>Наши услуги</h2>
+      <p class="subtitle">Полный комплекс ухода за собой</p>
+      <div class="services-grid">
+        <div class="card"><div class="icon">💅</div><h3>Маникюр</h3><p>Аппаратный, комбинированный, наращивание, дизайн любой сложности.</p></div>
+        <div class="card"><div class="icon">🦶</div><h3>Педикюр</h3><p>Медицинский и SPA-педикюр, уход за стопами и покрытие гель-лаком.</p></div>
+        <div class="card"><div class="icon">💇‍♀️</div><h3>Волосы</h3><p>Стрижки, окрашивание, уходы (Olaplex, K18), укладки и причёски.</p></div>
+        <div class="card"><div class="icon">✨</div><h3>Брови и ресницы</h3><p>Коррекция, окрашивание бровей, ламинирование, наращивание ресниц.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ЦЕНЫ -->
+  <section id="prices">
+    <div class="container">
+      <h2>Прайс-лист</h2>
+      <p class="subtitle">Актуальные цены на популярные услуги</p>
+      <div class="price-table">
+        <div class="price-row"><span class="name">Маникюр + покрытие гель-лак</span><span class="val">от 2 500 ₽</span></div>
+        <div class="price-row"><span class="name">Педикюр (аппаратный)</span><span class="val">от 3 000 ₽</span></div>
+        <div class="price-row"><span class="name">Наращивание ногтей</span><span class="val">от 3 500 ₽</span></div>
+        <div class="price-row"><span class="name">Стрижка + укладка</span><span class="val">от 2 800 ₽</span></div>
+        <div class="price-row"><span class="name">Окрашивание волос</span><span class="val">от 5 000 ₽</span></div>
+        <div class="price-row"><span class="name">Коррекция + окрашивание бровей</span><span class="val">от 1 800 ₽</span></div>
+        <div class="price-row"><span class="name">Ламинирование ресниц</span><span class="val">от 2 200 ₽</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- МАСТЕРА -->
+  <section id="masters">
+    <div class="container">
+      <h2>Наши мастера</h2>
+      <p class="subtitle">Топ-специалисты с опытом от 5 лет</p>
+      <div class="masters-grid">
+        <div class="master"><div class="avatar">АК</div><h3>Анна</h3><p>Топ-мастер маникюра</p></div>
+        <div class="master"><div class="avatar">МС</div><h3>Мария</h3><p>Стилист-колорист</p></div>
+        <div class="master"><div class="avatar">ЕВ</div><h3>Елена</h3><p>Педикюр, подология</p></div>
+        <div class="master"><div class="avatar">ОП</div><h3>Ольга</h3><p>Бровист / лэшмейкер</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- КОНТАКТЫ -->
+  <section id="contacts">
+    <div class="container">
+      <h2>Контакты и запись</h2>
+      <p class="subtitle">Ждём вас ежедневно с 9:00 до 21:00</p>
+      <div class="contact-wrap">
+        <div class="contact-info">
+          <p>📍 г. Махачкала (дальше она сама)</p>
+          <p>📞 +7 (960) 416-14-24</p>
+          <p>💬 WhatsApp: +7 (960) 416-14-24</p>
+          <p>💬 Telegram: @realmekkk</p>
+        </div>
+        <form id="bookingForm">
+          <input type="text" id="name" placeholder="Ваше имя" required>
+          <input type="tel" id="phone" placeholder="Телефон" required>
+          <select id="service" required>
+            <option value="" disabled selected>Выберите услугу</option>
+            <option>Маникюр</option>
+            <option>Педикюр</option>
+            <option>Волосы</option>
+            <option>Брови / ресницы</option>
+          </select>
+          <input type="date" id="date" required>
+          <button type="submit" class="btn">Отправить заявку</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ФУТЕР -->
+  <footer>
+    <div class="container">© 2026 Салон красоты «Lumiere». Все права защищены.</div>
+  </footer> 
+
+<script>
+document.getElementById('bookingForm').addEventListener('submit', function(e) {
+    e.preventDefault(); // останавливаем обычную отправку формы
+
+    var phoneNumber = '79634161424'; // <-- ВАШ номер: код страны + номер, без + и пробелов
+
+    var name    = document.getElementById('name').value;
+    var phone   = document.getElementById('phone').value;
+    var service = document.getElementById('service').value;
+    var date    = document.getElementById('date').value;
+
+    var message =
+        'Новая запись!%0A' +
+        'Имя: ' + encodeURIComponent(name) + '%0A' +
+        'Телефон: ' + encodeURIComponent(phone) + '%0A' +
+        'Услуга: ' + encodeURIComponent(service) + '%0A' +
+        'Дата: ' + encodeURIComponent(date);
+
+    window.open('https://wa.me/' + phoneNumber + '?text=' + message, '_blank');
+});
+</script>
+
+</body>
+</html>
